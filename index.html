@@ -221,7 +221,8 @@ main{
   padding:52px 21px;
 }
 
-.ivory-section > *:not(.dot-field),
+/* Keep flowers independently positioned */
+.ivory-section > *:not(.dot-field):not(.corner-flower),
 .paper-section > *:not(.paper-texture):not(.dot-field){
   position:relative;
   z-index:4;
@@ -234,6 +235,53 @@ main{
   border:1px solid rgba(190,151,143,.19);
   pointer-events:none;
   z-index:2;
+}
+
+/* FLOWERS ON WHITE FRAMES */
+
+.corner-flower{
+  position:absolute;
+  width:clamp(27px,7vw,39px);
+  height:clamp(27px,7vw,39px);
+  object-fit:contain;
+  display:block;
+  opacity:.9;
+  z-index:7;
+  pointer-events:none;
+  transform-origin:center;
+  animation:flowerFloat 5s ease-in-out infinite;
+}
+
+.corner-flower.top-left{
+  top:19px;
+  left:17px;
+}
+
+.corner-flower.top-right{
+  top:19px;
+  right:17px;
+  animation-delay:1.1s;
+}
+
+.corner-flower.bottom-left{
+  bottom:19px;
+  left:17px;
+  animation-delay:2.1s;
+}
+
+.corner-flower.bottom-right{
+  bottom:19px;
+  right:17px;
+  animation-delay:.6s;
+}
+
+@keyframes flowerFloat{
+  0%,100%{
+    transform:translateY(0) rotate(-4deg);
+  }
+  50%{
+    transform:translateY(-4px) rotate(4deg);
+  }
 }
 
 /* CUT.PNG BACKGROUND - NO PINK BACKGROUND */
@@ -345,6 +393,15 @@ main{
   max-width:720px;
   margin:17px auto 0;
   color:#705b58;
+}
+
+.surah-reference{
+  font-family:"Cormorant Garamond",serif;
+  font-size:1rem;
+  font-style:italic;
+  letter-spacing:.04em;
+  color:#a77b7c;
+  margin:17px auto 0;
 }
 
 /* DATE INTRO */
@@ -701,8 +758,10 @@ main{
   pointer-events:none;
 }
 
+/* SLOWER PLANE */
+
 .najaf.in-view .plane{
-  animation:fly 3.5s ease-in-out forwards;
+  animation:fly 8s ease-in-out forwards;
 }
 
 @keyframes fly{
@@ -951,15 +1010,17 @@ main{
     affection and mercy."
   </p>
 
+  <p class="surah-reference">(Surah Ar-Rum: 21)</p>
+
 </section>
 
-<!-- MILAD DATE -->
+<!-- MEHFIL E ZEHRA DATE -->
 
 <section class="ivory-section date-section dot-section">
 
   <div class="eyebrow">Save the date</div>
 
-  <h2 class="section-title">Milad Date</h2>
+  <h2 class="section-title">Mehfil e Zehra</h2>
 
   <p class="date-intro">
     A blessed day, written by the will of Allah.
@@ -1061,7 +1122,9 @@ main{
     <br>
 
     <span class="calligraphy">
-      Saniya &amp; Ali Jawad say Qubool Hai.
+      Saniya &amp; Ali Jawad
+      <br>
+      Nikah Ceremony
     </span>
 
   </p>
@@ -1141,6 +1204,32 @@ main{
 </main>
 
 <script>
+
+/* FLOWERS ON WHITE FRAMED SECTIONS */
+
+document.querySelectorAll(".ivory-section").forEach(section=>{
+
+  const positions=[
+    "top-left",
+    "top-right",
+    "bottom-left",
+    "bottom-right"
+  ];
+
+  positions.forEach(position=>{
+
+    const flower=document.createElement("img");
+
+    flower.src="./flower.PNG";
+    flower.alt="";
+    flower.className="corner-flower "+position;
+    flower.setAttribute("aria-hidden","true");
+
+    section.appendChild(flower);
+
+  });
+
+});
 
 /* FALLING DOTS - NO WATER WAVES */
 
